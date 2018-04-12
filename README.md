@@ -18,3 +18,10 @@ spring注解的原理及示例。
 
 ### character3
 演示@Conditional注解，按照条件注册bean，只有符合条件的组件才能加入到容器中，此外自己实现Condition接口实现条件判断，在LinuxCondition中还讲解了spring的注册中心。
+
+### character4
+演示了使用@Import注解想容器中添加组件的三种方式：
+
+1. @Import的value属性中直接加入组件的类型，即可将该组件加入到容器中。
+2. value属性中加入实现了ImportSelector接口的类的类型，会将该类的返回值（返回值是String[]，每个字符串是一个类的全类名）中的所有组件加入到容器中。
+3. value属性中加入实现了ImportBeanDefinitionRegistrar接口的类的类型，该实现类中是手动注册bean到注册中心的逻辑，@Import的value属性一旦加入了该类，该类中手动注册bean的逻辑将被执行于是一个或多个bean将被注册到注册中心。
