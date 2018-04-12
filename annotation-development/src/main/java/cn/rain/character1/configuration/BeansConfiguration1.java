@@ -77,7 +77,7 @@ import org.springframework.stereotype.Service;
 //
 //        useDefaultFilters = false
                 )
-public class BeansConfiguration {
+public class BeansConfiguration1 {
     @Bean("person001")
     public Person personAutoInitAll(){
         return new Person("任伟001", 26);
