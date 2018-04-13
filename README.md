@@ -1,7 +1,7 @@
 # SpringAnnotation
 spring注解的原理及示例。
 
-## annotation-development
+## PartⅠ annotation-development
 主要演示spring容器相关的注解及其原理
 
 ### character1
@@ -25,3 +25,12 @@ spring注解的原理及示例。
 1. @Import的value属性中直接加入组件的类型，即可将该组件加入到容器中。
 2. value属性中加入实现了ImportSelector接口的类的类型，会将该类的返回值（返回值是String[]，每个字符串是一个类的全类名）中的所有组件加入到容器中。
 3. value属性中加入实现了ImportBeanDefinitionRegistrar接口的类的类型，该实现类中是手动注册bean到注册中心的逻辑，@Import的value属性一旦加入了该类，该类中手动注册bean的逻辑将被执行于是一个或多个bean将被注册到注册中心。
+
+### character5
+演示了通过实现spring的FactoryBean<T>接口，通过在该工厂上使用@Bean注解，向容器中添加<T>组件。
+至此，我们演示了向容器中添加组件的四种方式，这里给出总结：
+
+1. 通过@ComponentScan注解开启包扫描，并且在组件上标注组件注解，让spring自动扫描组件并加入到容器中。这种方式仅适用于自己写的组件，因为我们无法在第三库的类上加入组件注解。另外我们在扫描某个包的时候还可以通过excludeFilters或者includeFilters定义过滤规则。
+2. 通过在配置类中编写方法，并在方法上使用@Bean注解来向容器中添加组件，方法返回值即为组件的类型，组件的id默认是方法名（但组件id可通过@Bean注解的value属性进行更改）。
+3. 使用@Import注解为容器中添加组件，其value属性是一个Class[]，里面可以传入普通的组件、实现了ImportSelector接口的实现类、实现了ImportBeanDefinitionRegistrar接口的实现类。
+4. 和方式2类似，但是这里的方法的返回值类型是一个实现了FactoryBean<T>的实现类，这样为容器添加的组件不再是方法的返回值类型，而是这个工厂Bean中生产的组件，即泛型<T>中给出的类型。

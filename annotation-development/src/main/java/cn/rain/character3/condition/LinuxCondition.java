@@ -1,8 +1,10 @@
 package cn.rain.character3.condition;
 
+import cn.rain.character1.beans.Person;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
+import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
 import org.springframework.core.env.Environment;
@@ -51,6 +53,21 @@ public class LinuxCondition implements Condition{
         // 此外我们还可以通过BeanDefinitionRegistry对象给容器中注册bean。
         boolean isContain = registry.containsBeanDefinition("bill");
         System.out.println("bill的bean是否在容器中注册了？" + isContain);
+
+        // 使用BeanDefinitionRegistry对象手动为person进行注册
+        boolean personIsContain = registry.containsBeanDefinition("person");
+        System.out.println("person的bean是否在容器中注册了？" + personIsContain);
+        if (!personIsContain){
+            System.out.println("正在为person进行注册。。。");
+            BeanDefinition personDef = new RootBeanDefinition(Person.class);
+            // 为person初始化属性
+            personDef.setAttribute("name", "张三");
+            personDef.setAttribute("age", 28);
+            registry.registerBeanDefinition("person", personDef);
+        }
+        boolean personIsContain2 = registry.containsBeanDefinition("person");
+        System.out.println("person的bean是否在容器中注册了？" + personIsContain2);
+
 
         // 通过当前运行环境获取到所使用的操作系统
         String osName = environment.getProperty("os.name");

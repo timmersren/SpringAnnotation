@@ -29,5 +29,10 @@ public class Test1 {
         // 根据bean的类型获取bean的id，由于多个id可以对应同一个类型，因此返回的是bean的id的String数组。
         String[] beanNames = context.getBeanNamesForType(Person.class);
         System.out.println(Arrays.toString(beanNames));
+
+        // 检验person的属性是不是在LinuxCondition中为person注册时设置的
+        // todo 但是我在LinuxCondition注册person前为person设置了属性，但是这里显示null，此问题目前还不知道如何解决。
+        Person person = (Person) context.getBean("person");
+        System.out.println(person);
     }
 }

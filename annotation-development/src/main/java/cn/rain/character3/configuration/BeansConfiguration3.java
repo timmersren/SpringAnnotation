@@ -2,6 +2,7 @@ package cn.rain.character3.configuration;
 
 import cn.rain.character1.beans.Person;
 import cn.rain.character3.condition.LinuxCondition;
+import cn.rain.character3.condition.PersonCondition;
 import cn.rain.character3.condition.WindowsCondition;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -29,6 +30,16 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class BeansConfiguration3 {
+
+    @Bean("person")
+    @Conditional(value = {PersonCondition.class})
+    public Person person(){
+        System.out.println("创建了person的bean...");
+        return new Person("任伟", 26);
+    }
+
+
+
     @Bean("bill")
     @Conditional(value = {WindowsCondition.class})
     public Person bill(){
