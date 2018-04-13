@@ -1,5 +1,6 @@
 # SpringAnnotation
-spring注解的原理及示例。
+这是一套关于spring注解开发的详细教程，讲解了我们使用spring开发时常用的注解。
+教程参考自尚硅谷的公开课《spring注解驱动开发》，但是代码和笔记均由本人亲自整理。
 
 ## PartⅠ annotation-development
 主要演示spring容器相关的注解及其原理
@@ -34,3 +35,10 @@ spring注解的原理及示例。
 2. 通过在配置类中编写方法，并在方法上使用@Bean注解来向容器中添加组件，方法返回值即为组件的类型，组件的id默认是方法名（但组件id可通过@Bean注解的value属性进行更改）。
 3. 使用@Import注解为容器中添加组件，其value属性是一个Class[]，里面可以传入普通的组件、实现了ImportSelector接口的实现类、实现了ImportBeanDefinitionRegistrar接口的实现类。
 4. 和方式2类似，但是这里的方法的返回值类型是一个实现了FactoryBean<T>的实现类，这样为容器添加的组件不再是方法的返回值类型，而是这个工厂Bean中生产的组件，即泛型<T>中给出的类型。
+
+### character6
+演示了spring管理Bean的生命周期的四种方式：
+1. 在bean中自定义该bean的初始化方法和销毁方法，在@Bean注解中通过init-method和destroy-method属性指定自定义的初始化和销毁方法。
+2. 让bean实现InitializingBean接口并重写该接口的afterPropertiesSet方法，spring在该bean的初始化阶段便会执行afterPropertiesSet方法；同理，让bean实现DisposableBean接口并重写该接口的destroy方法，spring在该bean的销毁阶段便会执行destroy方法。
+3. 使用JSR250标准规范，在bean中自定义初始化方法并使用@PostConstruct注解标注，spring在该bean的初始化阶段便会执行自定义的初始化方法；同理，在bean中自定义销毁方法并使用@PreDestroy注解标注，spring在该bean的销毁阶段便会执行自定义的销毁方法。
+4. 自定义Bean的后置处理器，要求实现BeanPostProcessor接口，并实现该接口中的两个方法。和前三种方式有两点不同，第一点不同是Bean后置处理器管理的阶段不是bean的初始化和销毁，而是bean的初始化阶段前和初始化阶段后，对应的方法分别是postProcessBeforeInitialization和postProcessAfterInitialization；第二点不同是，前三种方式都是针对某个Bean进行生命周期的管理，而Bean的后置处理器，一旦将我们自定义的Bean后置处理器加入到容器中，那么该后置处理器将会对容器中所有的bean起作用。
