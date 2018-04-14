@@ -42,3 +42,9 @@
 2. 让bean实现InitializingBean接口并重写该接口的afterPropertiesSet方法，spring在该bean的初始化阶段便会执行afterPropertiesSet方法；同理，让bean实现DisposableBean接口并重写该接口的destroy方法，spring在该bean的销毁阶段便会执行destroy方法。
 3. 使用JSR250标准规范，在bean中自定义初始化方法并使用@PostConstruct注解标注，spring在该bean的初始化阶段便会执行自定义的初始化方法；同理，在bean中自定义销毁方法并使用@PreDestroy注解标注，spring在该bean的销毁阶段便会执行自定义的销毁方法。
 4. 自定义Bean的后置处理器，要求实现BeanPostProcessor接口，并实现该接口中的两个方法。和前三种方式有两点不同，第一点不同是Bean后置处理器管理的阶段不是bean的初始化和销毁，而是bean的初始化阶段前和初始化阶段后，对应的方法分别是postProcessBeforeInitialization和postProcessAfterInitialization；第二点不同是，前三种方式都是针对某个Bean进行生命周期的管理，而Bean的后置处理器，一旦将我们自定义的Bean后置处理器加入到容器中，那么该后置处理器将会对容器中所有的bean起作用。
+
+### character7
+演示了使用@Value注解为Bean的属性赋值，赋值方式有第三种：
+1. 基本数字即字符串、int、浮点数、boolean类型的值
+2. 可以使用SpEL，即spring的表达式#{}
+3. 可以使用${ }取出properties配置文件中的值。在此处又讲解了在配置类上使用@PropertySource注解以加载配置文件到运行时的环境变量（Environment对象）中。
