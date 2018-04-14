@@ -46,6 +46,48 @@ import org.springframework.context.annotation.Scope;
  *  postProcessAfterInitialization，这两个方法中的逻辑一个是在bean的初始化之前执行，另一个是在bean的初始化之后执行。
  *  注意，我们自定义的这个Bean后置处理器一旦加入到容器中，将会对容器中所有的Bean起作用。
  *
+ *  BeanPostProcessor原理：
+ *  在源码中，在初始化阶段前postProcessBeforeInitialization是通过applyBeanPostProcessorsBeforeInitialization方法执行的：
+ *
+ * 	public Object applyBeanPostProcessorsBeforeInitialization(Object existingBean, String beanName)
+ * 			throws BeansException {
+ *
+ * 		Object result = existingBean;
+ * 	    // 遍历所有的Bean后置处理器
+ * 		for (BeanPostProcessor beanProcessor : getBeanPostProcessors()) {
+ * 	        //	我们知道postProcessBeforeInitialization方法会返回Object也就是bean（或者包装过的Bean）
+ * 			result = beanProcessor.postProcessBeforeInitialization(result, beanName);
+ * 			if (result == null) {
+ * 		        // 如果调用某个Bean的后置处理器的方法返回了null，那么遍历到此为止跳出循环
+ * 		        // 还没有执行到的后置处理器也没有机会执行了，你想这个处理器都让这个bean变为null了，
+ * 		        // 你后边的处理器对一个null进行处理有意义吗？并且这种情况后边很容易引起空指针异常。
+ * 				return result;
+ * 			}
+ * 		}
+ * 		return result;
+ * 	}
+ *
+ * 	接下来说bean初始化阶段的源码，我们可以在源码中看到这样一个方法：populateBean(beanName, mbd, instanceWrapper);
+ * 	这个方法是给bean进行属性赋值（例如setter、@Autowired等方式），并且我们发现源码中的顺序是这样的：
+ *
+ * 	populateBean(beanName, mbd, instanceWrapper); //给bean进行属性赋值
+ *
+ * 	initializeBean //然后才是Bean的后置处理器执行且中间夹着bean的初始化，下面的代码块是伪代码，仅为了描述执行顺序。
+ *  {
+ *  applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);
+ *  invokeInitMethods(beanName, wrappedBean, mbd);  // 执行自定义初始化
+ *  applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);
+ *  }
+ *
+ *  通过源码我们可以知道，bean的生命周期的顺序是：创建实例-->为属性赋值-->后置处理器的postProcessorsBeforeInitialization方法
+ *                                                   -->bean的初始化方法-->后置处理器的postProcessorsAfterInitialization方法
+ *
+ *
+ *  spring底层对BeanPostProcessor的使用：
+ *          bean的赋值、注入其他组件、@Autowired、生命周期注解（如JSR250的@PostConstruct、@PreDestroy）等等都是使用
+ *  BeanPostProcessor来完成的。
+ *
+ *
  * @author 任伟
  * @date 2018/4/13 11:33
  */
