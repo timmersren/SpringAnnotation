@@ -48,3 +48,10 @@
 1. 基本数字即字符串、int、浮点数、boolean类型的值
 2. 可以使用SpEL，即spring的表达式#{}
 3. 可以使用${ }取出properties配置文件中的值。在此处又讲解了在配置类上使用@PropertySource注解以加载配置文件到运行时的环境变量（Environment对象）中。
+
+### character8
+演示spring的自动装配：
+1. 演示了使用spring提供的@Autowired注解进行组件的自动装配。
+2. 比较了Java提供的@Resource、@Inject注解进行自动装配和spring的@Autowired的不同点。
+3. 讲解了@Autowired注解可以使用的位置。
+4. 演示了如何在自定义组件中使用spring底层的组件，如ApplicationContext，BeanFactory等等。
