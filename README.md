@@ -55,3 +55,6 @@
 2. 比较了Java提供的@Resource、@Inject注解进行自动装配和spring的@Autowired的不同点。
 3. 讲解了@Autowired注解可以使用的位置。
 4. 演示了如何在自定义组件中使用spring底层的组件，如ApplicationContext，BeanFactory等等。
+
+### character9
+演示了使用@Profile注解来标识不同的运行环境。

@@ -35,7 +35,6 @@ import org.springframework.context.annotation.Import;
  * @author 任伟
  * @date 2018/4/12 22:35
  */
-
 @Configuration
 @Import(value = {Color.class, Person.class, MyImportSelector.class, MyImportBeanDefinitionRegistrar.class}) // 使用Import注解导入组件到容器中
 public class BeansConfiguration4 {
