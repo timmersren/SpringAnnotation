@@ -58,3 +58,6 @@
 
 ### character9
 演示了使用@Profile注解来标识不同的运行环境。
+
+### character10
+演示spring的AOP功能，通过源码分析AOP的原理，详见cn.rain.character10.configuration.BeansConfiguration10中的笔记。
