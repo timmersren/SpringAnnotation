@@ -61,3 +61,6 @@
 
 ### character10
 演示spring的AOP功能，通过源码分析AOP的原理，详见cn.rain.character10.configuration.BeansConfiguration10中的笔记。
+
+### character11
+演示了spring的声明式事务，且分析了其运行原理。
