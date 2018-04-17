@@ -64,3 +64,9 @@
 
 ### character11
 演示了spring的声明式事务，且分析了其运行原理。
+
+### character12
+讲解spring扩展原理，即一些其他核心组件的原理。
+1. BeanFactoryPostProcessor
+2. BeanDefinitionRegistryPostProcessor
+3. ApplicationListener
