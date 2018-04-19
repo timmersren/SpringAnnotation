@@ -70,3 +70,5 @@
 1. BeanFactoryPostProcessor
 2. BeanDefinitionRegistryPostProcessor
 3. ApplicationListener
+   - 继承ApplicationListener<E>接口方式
+   - 方法使用@EventListener注解方法
