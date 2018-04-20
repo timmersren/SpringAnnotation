@@ -72,3 +72,16 @@
 3. ApplicationListener
    - 继承ApplicationListener<E>接口方式
    - 方法使用@EventListener注解方法
+   
+## PartⅡ annotation-servlet3.0
+演示servlet3.0规范中注解的使用
+
+### character1
+演示使用注解配置servlet替代原始的通过web.xml配置。
+
+### character2 
+演示ServletContainerInitializer机制。
+实现ServletContainerInitializer的接口能在Servlet容器启动时加载到，从而获取到ServletContext给在容器启动初始化阶段给容器添加组件。
+
+
+
