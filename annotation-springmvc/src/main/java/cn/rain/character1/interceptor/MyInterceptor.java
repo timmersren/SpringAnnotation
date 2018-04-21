@@ -18,7 +18,7 @@ public class MyInterceptor implements HandlerInterceptor {
     // 目标方法运行之前执行
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("拦截器的preHandle...");
+        System.out.println("拦截器的preHandle...拦截的请求是： " + request.getRequestURI());
         return true;
     }
 

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Controller;
  * @author 任伟
  * @date 2018/4/21 14:00
  */
-@ComponentScan(value = "cn.rain.character1",
+@ComponentScan(value = {"cn.rain.character1", "cn.rain.character2"},
                excludeFilters = {@ComponentScan.Filter(
                        type = FilterType.ANNOTATION, classes = {Controller.class}
                )})

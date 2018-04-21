@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.*;
  * @date 2018/4/21 14:00
  */
 @SuppressWarnings("all")
-@ComponentScan(value = {"cn.rain.character1"},
+@ComponentScan(value = {"cn.rain.character1", "cn.rain.character2"},
         includeFilters = { @ComponentScan.Filter(
                 type = FilterType.ANNOTATION, classes = {Controller.class}
         )},
