@@ -83,5 +83,9 @@
 演示ServletContainerInitializer机制。
 实现ServletContainerInitializer的接口能在Servlet容器启动时加载到，从而获取到ServletContext给在容器启动初始化阶段给容器添加组件。
 
+## PartⅢ annotation-springmvc
+演示基于注解形式的springMVC。
 
-
+### character1
+1. 演示了基于注解+配置类的形式配置并启动springMVC，替代之前通过web.xml等各种配置文件的配置形式。
+2. 演示了springMVC的定制功能。

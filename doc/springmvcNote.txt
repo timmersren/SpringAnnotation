@@ -1,0 +1,38 @@
+1、由于web容器在启动的时候，会扫描每个jar包下的META-INF/services/javax.servlet.ServletContainerInitializer。
+2、我们可以看到在org.springframework.spring-web-4.3.11.RELEASE.jar这个jar包下的META-INF.services文件中看到
+   文件指定的类SpringServletContainerInitializer。
+3.我们在SpringServletContainerInitializer中可以看到@HandlesTypes(WebApplicationInitializer.class)，因此spring
+  的应用一启动会加载感兴趣的WebApplicationInitializer接口的下的所有组件。
+4.并且为WebApplicationInitializer接口下的所有组件创建对象（前提组件不是接口，不是抽象类），下面分析该接口下的组件：
+    （1）AbstractContextLoaderInitializer：通过createRootApplicationContext()方法创建根容器。  -->  AbstractContextLoaderInitializer  59 行
+    （2）AbstractDispatcherServletInitializer：
+         ① 通过createServletApplicationContext()方法创建一个web的ioc容器。  -->  AbstractDispatcherServletInitializer 89 行
+         ② 通过createDispatcherServlet()方法创建了DispatcherServlet。   -->  AbstractDispatcherServletInitializer  94 行
+         ③ 通过servletContext.addServlet(servletName, dispatcherServlet)方法将创建的DispatcherServlet添加到ServletContext中，
+            并返回ServletRegistration.Dynamic registration。    -->  AbstractDispatcherServletInitializer 97 行
+         ④ 通过返回的registration为Servlet配置属性。   -->  AbstractDispatcherServletInitializer  102-104 行
+
+    （3）AbstractAnnotationConfigDispatcherServletInitializer，注解方式配置的DispatcherServlet初始化器：
+         ① 通过createRootApplicationContext()方法创建根容器，内部是通过调用getRootConfigClasses()方法传入一个配置类
+            来实现的。  -->  AbstractAnnotationConfigDispatcherServletInitializer    52-62 行
+         ② 通过createServletApplicationContext()方法创建web的ioc容器，内部是通过调用getServletConfigClasses()方法
+            获取配置类来实现的。  -->  AbstractAnnotationConfigDispatcherServletInitializer  70-77 行
+
+ 总结：
+ 如果不以传统的配置web.xml方式配置springMVC，而是以注解方式来启动SpringMVC，我们需要继承
+ AbstractAnnotationConfigDispatcherServletInitializer，实现其抽象方法指定DispatcherServlet的配置信息即可。
+
+ ===========================================================================================================================
+
+     之前在springMVC.xml的配置文件中，我们可以通过一些标签来使用springMVC的高级功能，例如<mvc:default-servlet-handler/>标签
+ 可以将SpringMVC处理不了的请求交给tomcat，比如静态资源就可以访问；再例如<mvc:annotation-driven/>标签可以开启SpringMVC的
+ 高级功能开启；又例如<mvc:interceptors>标签可以开启springMVC的拦截器功能。这些功能如果我们想通过注解的方式使用，我们需要
+ 定制springMVC的功能，步骤如下：
+    （1）在配置类上标注@EnableWebMvc注解，开启springMVC定制配置功能，就相当于在xml文件中配置<mvc:annotation-driven/>标签。
+    （2）配置组件（视图解析器、视图映射、静态资源映射、拦截器等等）需要让springMVC的配置类实现WebMvcConfigurer接口。
+         该接口中有很多方法，所有之前在xml中配置的功能都可以通过实现该接口中的方法来实现，但是我们实现该接口就要将其所有
+         的方法全部实现，由于一般我们不会用到这里的所有功能，我们希望仅实现其中一些常用的方法即可，故此时我们可以选择继承
+         WebMvcConfigurer接口下面的抽象类WebMvcConfigurerAdapter。WebMvcConfigurerAdapter这个抽象类其实就是实现了
+         WebMvcConfigurerAdapter接口，实现了接口中的所有方法，但是方法中全是空的，我们通过继承WebMvcConfigurerAdapter就
+         可以只重写那些我们需要的方法。
+         示例见cn.rain.character1.configuration.WebConfig。

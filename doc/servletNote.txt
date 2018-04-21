@@ -1,6 +1,8 @@
 Shared libraries（共享库） / runtimes pluggability（运行时插件能力）
 
 1.Servlet容器(例如Tomcat)启动会扫描当前应用里面每一个jar包里面的ServletContainerInitializer的实现。
-2.ServletContainerInitializer的实现类必须绑定在jar包里面的META-INF/services/javax.servlet.ServletContainerInitializer文件中。文件的内容就是ServletContainerInitializer实现类的全类名。
+2.ServletContainerInitializer的实现类必须绑定在jar包里面的META-INF/services/javax.servlet.ServletContainerInitializer文件中。
+文件的内容就是ServletContainerInitializer实现类的全类名。
 
-总结：容器在启动应用的时候，会扫描当前应用每一个jar包里面的META-INF/services/javax.servlet.ServletContainerInitializer指定的实现类，启动并运行这个实现类的方法；传入感兴趣的类型；
+总结：容器在启动应用的时候，会扫描当前应用每一个jar包里面的META-INF/services/javax.servlet.ServletContainerInitializer指定的
+实现类，启动并运行这个实现类的方法，且会传入感兴趣的类型（即@HandlesTypes的value属性中传入的类型的后台）；
