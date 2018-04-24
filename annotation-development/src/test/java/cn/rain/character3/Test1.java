@@ -34,5 +34,11 @@ public class Test1 {
         // todo 但是我在LinuxCondition注册person前为person设置了属性，但是这里显示null，此问题目前还不知道如何解决。
         Person person = (Person) context.getBean("person");
         System.out.println(person);
+
+        System.out.println("===================================================");
+        String[] names = context.getBeanDefinitionNames();
+        for (String name : names) {
+            System.out.println(name);
+        }
     }
 }

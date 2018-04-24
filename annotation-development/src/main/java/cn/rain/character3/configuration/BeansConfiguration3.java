@@ -21,14 +21,17 @@ import org.springframework.context.annotation.Configuration;
  *
  * 另外@Conditional注解不只能在方法上使用，还可以使用在类上。当它在方法上使用时，只有
  * 当spring扫描到该方法时才会对这个@Conditional定义的判断条件进行判断，也就是说它使用在
- * 某个方法上的时候该判断条件的作用范围仅限于此方法；当它定义在类上的时候，这个类中的所有
- * 方法都要对该条件进行判断，即定义在类上的时候其作用范围是类中的所有方法。
+ * 某个方法上的时候该判断条件的作用范围仅限于此方法；而当它定义在类上的时候，如果判断为
+ * false的话那么整个配置类都会失效，因为此时该配置类不会加入到容器中，该配置类中的所有
+ * 方法（即通过@Bean给容器添加组件）也不会执行。原因很简单，配置类都不在容器中，spring
+ * 也就不可能扫描到配置类中的方法了。
  *
  * @author 任伟
  * @date 2018/4/12 14:37
  */
 
 @Configuration
+//@Conditional(value = {LinuxCondition.class})
 public class BeansConfiguration3 {
 
     @Bean("person")
