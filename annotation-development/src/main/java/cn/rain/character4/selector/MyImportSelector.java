@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * description: @Import注解的value属性值普通的组件，还可以是实现了ImportSelector接口的类。
+ * description: @Import注解的value属性值可以是普通的组件，还可以是实现了ImportSelector接口的类。
  * 该类实现的方法selectImports将返回一个String[]数组，这个数组中是各个组件的全类名。
  * 如果@Import注解的value属性中是这样一个实现了ImportSelector接口的类，那么它将会把该类的
  * selectImports方法的返回值中的所有全类目对应的组件加入到容器中。

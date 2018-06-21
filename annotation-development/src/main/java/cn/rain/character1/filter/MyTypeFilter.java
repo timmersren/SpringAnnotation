@@ -10,7 +10,7 @@ import org.springframework.core.type.filter.TypeFilter;
 import java.io.IOException;
 
 /**
- * description: 自定义@ComponentScan中的FilterType.CUSTOM，需要是TypeFilter接口。
+ * description: 自定义@ComponentScan中的FilterType.CUSTOM，需要实现TypeFilter接口。
  * 我们知道，当我们开启@ComponentScan包扫描后，spring会扫描指定包中的所有组件，
  * 然后根据一定的过滤规则去将符合规则的组件加入到IoC容器中，如果我们不定义任何过滤规则，
  * 那么spring将使用默认的包扫描过滤规则将所有标注了组件注解的类加入到IoC容器中，
@@ -36,15 +36,15 @@ public class MyTypeFilter implements TypeFilter {
      */
     @Override
     public boolean match(MetadataReader metadataReader, MetadataReaderFactory metadataReaderFactory) throws IOException {
-        // 获取当前类注解的信息
+        // 获取当前被扫描到的类的注解信息
         AnnotationMetadata annotationMetadata = metadataReader.getAnnotationMetadata();
-        System.out.println("自定义拦截器中获取到的被拦截类的注解信息；" + annotationMetadata);
-        // 获取当前正在扫描的类的类信息
+        System.out.println("自定义拦截器中获取到的被拦截类的【注解信息】：" + annotationMetadata);
+        // 获取当前被扫描到的类的类信息
         ClassMetadata classMetadata = metadataReader.getClassMetadata();
-        System.out.println("自定义拦截器中获取到的被拦截类的类的信息" + classMetadata);
-        // 获取当前类资源（类的路径）
+        System.out.println("自定义拦截器中获取到的被拦截类的【类信息】：" + classMetadata);
+        // 获取当前被扫描到的类资源（类的路径）
         Resource resource = metadataReader.getResource();
-        System.out.println("自定义拦截器中获取到的被拦截类的资源信息" + resource);
+        System.out.println("自定义拦截器中获取到的被拦截类的【资源路径信息】：" + resource);
         // 获取当前类的类名
         String className = classMetadata.getClassName();
         // 拦截规则：只要类名中包含Dao就返回true

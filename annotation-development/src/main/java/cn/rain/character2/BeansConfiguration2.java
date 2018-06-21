@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * description: 演示Bean的单例和多例。使用xml配置bean的是时候，可以通过scope属性配置该bean为单例还是多例。
@@ -18,8 +19,8 @@ import org.springframework.context.annotation.Scope;
  *
  * 另外，在spring4项目中我们演示Bean的生命周期的时候已经讲解过，这里再强调一遍。
  * 使用单例模式的bean，会在加载IoC容器的时候就将该bean创建对象并加入到容器中，以后每次使用都从容器中直接拿这个对象；
- * 而多例的Bean在IoC启动的时候不会创建对象，而是在使用（获取）这个bean的时候才会去创建对象并加入到容器中，并且没获取
- * 一次这个bean就会创建一次这个bean的对象。
+ * 而多例的Bean在IoC启动的时候不会创建对象，而是在使用（获取）这个bean的时候才会去创建对象并加入到容器中，并且每次
+ * 获取这个bean就会创建一次这个bean的对象。
  *
  * 懒加载：对于单实例的bean，如果我们不希望在IoC容器启动的时候就创建某些Bean的对象，而是在第一次用到的时候才创建，
  * 我们就可以使用@Lazy注解将该bean标注为懒加载，注意懒加载只针对单实例Bean，因为多实例Bean本身就具备懒加载的特性。

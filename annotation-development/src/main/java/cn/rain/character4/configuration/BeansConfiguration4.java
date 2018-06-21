@@ -17,9 +17,10 @@ import org.springframework.context.annotation.Import;
  *
  * 这里我们介绍使用@Import注解快速简单的导入组件到容器中。
  * 注意:
- * 1.@Import注解只能使用在类上，并且要使用在标注了@Configuration（即配置类）上。
- * 2.使用@Import导入的组件，其id默认是该组件的全类名。
- * 3.@Import只导入其value属性中定义的组件，这些组件的子类和实现类不会被自动导进来，需要在value中配置才会导进来。
+ * 1)、@Import注解只能使用在类上，并且要使用在标注了@Configuration（即配置类）上，
+ *     其实我们就可以把它理解为对@Bean注解的简化，但是功能更为强大。
+ * 2)、使用@Import导入的组件，其id默认是该组件的全类名。
+ * 3)、@Import只导入其value属性中定义的组件，这些组件的子类和实现类不会被自动导进来，需要在value中配置才会导进来。
  *
  * 现在讲解@Import注解的第二种导入组件的方式：在@Import注解的value属性中加入实现了ImportSelector接口的类，该类
  * 实现的方法将返回一个String[]数组，这个数组中是一些类的全类名，@Import将会将这些全类名对应的类（组件）全部导入
@@ -36,7 +37,8 @@ import org.springframework.context.annotation.Import;
  * @date 2018/4/12 22:35
  */
 @Configuration
-@Import(value = {Color.class, Person.class, MyImportSelector.class, MyImportBeanDefinitionRegistrar.class}) // 使用Import注解导入组件到容器中
+// 使用Import注解导入组件到容器中（三种方式）
+@Import(value = {Color.class, Person.class, MyImportSelector.class, MyImportBeanDefinitionRegistrar.class})
 public class BeansConfiguration4 {
 
 }
